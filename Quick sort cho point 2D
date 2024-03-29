@@ -1,0 +1,40 @@
+class Toado:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+def partition(arr, low, high):
+    pivot = arr[high ]
+    j = low - 1
+
+    for i in range(low, high):
+        if arr[i].x < pivot.x or (arr[i].x == pivot.x and arr[i].y >= pivot.y):
+            j += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    j += 1
+    arr[j], arr[high ] = arr[high ], arr[j]
+    return j
+
+def quickSort(arr, low, high):
+    if low >= high:
+        return
+    else:
+        pi = partition(arr, low, high)
+        quickSort(arr, low, pi - 1)
+        quickSort(arr, pi + 1, high)
+
+N = int(input())
+
+A = []
+low = 0
+high = N-1
+for i in range(N):
+    a, b = map(int, input().split())
+    X = Toado(a, b)
+    A.append(X)
+
+quickSort(A, low, high)
+
+for i in A:
+    print(i.x, i.y)
