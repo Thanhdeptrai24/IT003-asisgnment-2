@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    string S;
+    cin >> S;
+    
+    vector<int> A;
+    for (int i = 0; i < S.length(); i++) {
+        A.push_back(S[i] - '0');
+    }
+    sort(A.begin(), A.end());
+    
+    int total = 0;
+    for (int i = 0; i < A.size(); i++) {
+        total += A[i];
+    }
+    
+    if (total % 3 == 1) {
+        int flag = -1;
+        for (int i = 0; i < A.size(); i++) {
+            if (A[i] % 3 == 1) {
+                flag = 1;
+                A.erase(A.begin() + i);
+                break;
+            }
+        }
+        if (flag == -1) {
+            int cnt = 0;
+            for (int i = 0; i < A.size(); i++) {
+                if (cnt == 2) {
+                    break;
+                }
+                if (A[i] % 3 == 2) {
+                    A.erase(A.begin() + i);
+                    cnt += 1;
+                    i-=1;
+                }
+            }
+        }
+    }
+    else if (total % 3 == 2) {
+        int flag = -1;
+        for (int i = 0; i < A.size(); i++) {
+            if (A[i] % 3 == 2) {
+                A.erase(A.begin() + i);
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == -1) {
+            int cnt = 0;
+            for (int i = 0; i < A.size(); i++) {
+                if (cnt == 2) {
+                    break;
+                }
+                if (A[i] % 3 == 1) {
+                    A.erase(A.begin() + i);
+                    cnt += 1;
+                    i-=1;
+                }
+            }
+        }
+    }
+    
+    sort(A.rbegin(), A.rend());
+    string number;
+    for (int i = 0; i < A.size(); i++) {
+        number += to_string(A[i]);
+    }
+    
+    cout << number << endl;
+    
+    return 0;
+}
